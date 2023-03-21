@@ -1,0 +1,15 @@
+//[:LEX:]
+// ideja je kalkulator osnovnih operacija preko Compiler Theory
+// nije potrebno kucati if's etc..
+// vec lexer da ucita tokene -> oprnd(operand) oprtr(operation) op_br(open_bracket) cl_br(closed_bracket)
+
+// nakon cega parser parsira AST stablo iz lexera i prelazi po sintaksnoj strukturi stabla
+// semanticka analiza mi nije potrebna bar za sada
+// interpreter izvrsava izraz
+
+//[:YACC:]
+// S -> E
+// E -> id | E op id | (E)
+
++ lex
+- yacc
