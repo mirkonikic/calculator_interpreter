@@ -72,8 +72,16 @@
   #include <stdio.h>
   int yylex(void);
   void yyerror(char *);
+  #define RED   "\x1B[31m"
+  #define GRN   "\x1B[32m"
+  #define YEL   "\x1B[33m"
+  #define BLU   "\x1B[34m"
+  #define MAG   "\x1B[35m"
+  #define CYN   "\x1B[36m"
+  #define WHT   "\x1B[37m"
+  #define RESET "\x1B[0m"
 
-#line 77 "y.tab.c"
+#line 85 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -559,8 +567,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    14,    14,    15,    18,    19,    20,    21,    24,    25,
-      45
+       0,    22,    22,    23,    26,    27,    28,    30,    33,    34,
+      54
 };
 #endif
 
@@ -1124,33 +1132,34 @@ yyreduce:
   switch (yyn)
     {
   case 4: /* S: E  */
-#line 18 "calc.y"
-      { printf("output: %d\ninput: ", yyvsp[0]); }
-#line 1130 "y.tab.c"
+#line 26 "calc.y"
+      { printf(BLU "output:" WHT " %d\n\n" BLU "input: " WHT, yyvsp[0]); }
+#line 1138 "y.tab.c"
     break;
 
   case 5: /* S: quit  */
-#line 19 "calc.y"
+#line 27 "calc.y"
          {return 1;}
-#line 1136 "y.tab.c"
+#line 1144 "y.tab.c"
     break;
 
   case 6: /* S: banner  */
-#line 20 "calc.y"
-           { printf("\t[_] CALC INTERP v0.1 [_]\n\n\t\t ..by mirkonikic\nusage: \n\t\t operators: + - * / ( )\n\t\t data types: int\n\t\t cmds: banner() quit()\n"); }
-#line 1142 "y.tab.c"
+#line 28 "calc.y"
+           { printf(RED "\t[_] CALC INTERP v0.1 [_]\n\n" WHT "\t\t ..by mirkonikic\n" YEL "usage: \n\t\t" RED " operators: " WHT "+ - * / ( )\n\t\t" RED " data types: " WHT "int\n\t\t" RED " cmds: " WHT "banner() quit()\n\n" BLU "input: "
+  WHT); }
+#line 1151 "y.tab.c"
     break;
 
   case 8: /* E: id  */
-#line 24 "calc.y"
+#line 33 "calc.y"
        { printf("E = %d\n", yyvsp[0]); yyval = yyvsp[0]; }
-#line 1148 "y.tab.c"
+#line 1157 "y.tab.c"
     break;
 
   case 9: /* E: E op E  */
-#line 25 "calc.y"
+#line 34 "calc.y"
            { 
-              printf("parsed: %d %c %d\n", yyvsp[-2], yyvsp[-1], yyvsp[0]); 
+              printf(CYN "parsed: " RESET "%d %c %d\n", yyvsp[-2], yyvsp[-1], yyvsp[0]); 
               switch (yyvsp[-1])
               {
                 case '+':
@@ -1169,17 +1178,17 @@ yyreduce:
                   break;
               }
             }
-#line 1173 "y.tab.c"
+#line 1182 "y.tab.c"
     break;
 
   case 10: /* E: op_br E cl_br  */
-#line 45 "calc.y"
+#line 54 "calc.y"
                   { printf("(%d)\n", yyvsp[-1]); yyval = yyvsp[-1];}
-#line 1179 "y.tab.c"
+#line 1188 "y.tab.c"
     break;
 
 
-#line 1183 "y.tab.c"
+#line 1192 "y.tab.c"
 
       default: break;
     }
@@ -1372,7 +1381,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 48 "calc.y"
+#line 57 "calc.y"
 
 
 void yyerror(char *s){
@@ -1381,7 +1390,7 @@ void yyerror(char *s){
 
 int main(void)
 {
-  printf("input: ");
+  printf(BLU "input: " RESET);
   //yylex();
   //printf("\n[LEXER] equation tokenized succesfully!\n"); 
   yyparse();

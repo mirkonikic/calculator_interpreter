@@ -9,27 +9,35 @@ punct [,.:;!?@_=\"\'\\{}\[\]]
 %{
   #include <stdio.h>
   #include "y.tab.h"
+  #define RED   "\x1B[31m"
+  #define GRN   "\x1B[32m"
+  #define YEL   "\x1B[33m"
+  #define BLU   "\x1B[34m"
+  #define MAG   "\x1B[35m"
+  #define CYN   "\x1B[36m"
+  #define WHT   "\x1B[37m"
+  #define RESET "\x1B[0m"
 %}
 %%
 "quit()" {return quit;}
 "banner()" {return banner;}
 ({blank}|{lettr}|{punct})+ ;
 {oprtr} {
-          printf("operator:(%s) ", yytext);
+          printf(GRN "operator:" RESET "(%s) ", yytext);
           yylval = yytext[0];
           return op;
         }
 {numbr}* {
-            printf("operand:(%s) ", yytext);
+            printf(YEL "operand:" RESET "(%s) ", yytext);
             yylval = atoi(yytext);
             return id;
           }
 {op_br} {
-          printf("\nopen_bracket ");
+          printf(MAG "\nopen_bracket " RESET);
           return op_br;
         }
 {cl_br} {
-          printf("closed_bracket\n");
+          printf(RED "closed_bracket\n" RESET);
           return cl_br;
         } 
 \n {

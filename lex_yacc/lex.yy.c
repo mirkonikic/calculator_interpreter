@@ -458,8 +458,16 @@ char *yytext;
 #line 10 "calc.l"
   #include <stdio.h>
   #include "y.tab.h"
-#line 461 "lex.yy.c"
-#line 462 "lex.yy.c"
+  #define RED   "\x1B[31m"
+  #define GRN   "\x1B[32m"
+  #define YEL   "\x1B[33m"
+  #define BLU   "\x1B[34m"
+  #define MAG   "\x1B[35m"
+  #define CYN   "\x1B[36m"
+  #define WHT   "\x1B[37m"
+  #define RESET "\x1B[0m"
+#line 469 "lex.yy.c"
+#line 470 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -676,9 +684,9 @@ YY_DECL
 		}
 
 	{
-#line 13 "calc.l"
+#line 21 "calc.l"
 
-#line 681 "lex.yy.c"
+#line 689 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -737,67 +745,67 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 14 "calc.l"
+#line 22 "calc.l"
 {return quit;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 15 "calc.l"
+#line 23 "calc.l"
 {return banner;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 16 "calc.l"
+#line 24 "calc.l"
 ;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 17 "calc.l"
+#line 25 "calc.l"
 {
-          printf("operator:(%s) ", yytext);
+          printf(GRN "operator:" RESET "(%s) ", yytext);
           yylval = yytext[0];
           return op;
         }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 22 "calc.l"
+#line 30 "calc.l"
 {
-            printf("operand:(%s) ", yytext);
+            printf(YEL "operand:" RESET "(%s) ", yytext);
             yylval = atoi(yytext);
             return id;
           }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 27 "calc.l"
+#line 35 "calc.l"
 {
-          printf("\nopen_bracket ");
+          printf(MAG "\nopen_bracket " RESET);
           return op_br;
         }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 31 "calc.l"
+#line 39 "calc.l"
 {
-          printf("closed_bracket\n");
+          printf(RED "closed_bracket\n" RESET);
           return cl_br;
         } 
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 35 "calc.l"
+#line 43 "calc.l"
 {
     return nw_ln;
    }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 38 "calc.l"
+#line 46 "calc.l"
 ECHO;
 	YY_BREAK
-#line 800 "lex.yy.c"
+#line 808 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1802,7 +1810,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 38 "calc.l"
+#line 46 "calc.l"
 
 
 int yywrap(void){

@@ -2,6 +2,14 @@
   #include <stdio.h>
   int yylex(void);
   void yyerror(char *);
+  #define RED   "\x1B[31m"
+  #define GRN   "\x1B[32m"
+  #define YEL   "\x1B[33m"
+  #define BLU   "\x1B[34m"
+  #define MAG   "\x1B[35m"
+  #define CYN   "\x1B[36m"
+  #define WHT   "\x1B[37m"
+  #define RESET "\x1B[0m"
 %}
 %token id
 %token op
@@ -15,15 +23,16 @@ program : program S nw_ln
   |
   ;
 
-S : E { printf("output: %d\ninput: ", $1); }
+S : E { printf(BLU "output:" WHT " %d\n\n" BLU "input: " WHT, $1); }
   | quit {return 1;}
-  | banner { printf("\t[_] CALC INTERP v0.1 [_]\n\n\t\t ..by mirkonikic\nusage: \n\t\t operators: + - * / ( )\n\t\t data types: int\n\t\t cmds: banner() quit()\n"); }
+  | banner { printf(RED "\t[_] CALC INTERP v0.1 [_]\n\n" WHT "\t\t ..by mirkonikic\n" YEL "usage: \n\t\t" RED " operators: " WHT "+ - * / ( )\n\t\t" RED " data types: " WHT "int\n\t\t" RED " cmds: " WHT "banner() quit()\n\n" BLU "input: "
+  WHT); }
   | 
   ;
 
 E : id { printf("E = %d\n", $1); $$ = $1; }
   | E op E { 
-              printf("parsed: %d %c %d\n", $1, $2, $3); 
+              printf(CYN "parsed: " RESET "%d %c %d\n", $1, $2, $3); 
               switch ($2)
               {
                 case '+':
@@ -53,7 +62,7 @@ void yyerror(char *s){
 
 int main(void)
 {
-  printf("input: ");
+  printf(BLU "input: " RESET);
   //yylex();
   //printf("\n[LEXER] equation tokenized succesfully!\n"); 
   yyparse();
