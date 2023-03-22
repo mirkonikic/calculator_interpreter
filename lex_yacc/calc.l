@@ -1,5 +1,3 @@
-%option noyywrap
-
 /* definitions */
 oprtr [\+\-\/\*]
 numbr [0-9]
@@ -10,16 +8,40 @@ lettr [a-zA-Z]
 punct [,.:;!?@_=\"\'\\{}\[\]]
 %{
   #include <stdio.h>
+  #include "y.tab.h"
 %}
 %%
-({blank}|{lettr}|{punct})+ 
-{oprtr} {printf("operator:(%s) ", yytext);}
-{numbr}* {printf("operand:(%s) ", yytext);}
-{op_br} {printf("open_bracket ");}
-{cl_br} {printf("closed_bracket ");} 
-\n {return 0;}
+"quit()" {return quit;}
+"banner()" {return banner;}
+({blank}|{lettr}|{punct})+ ;
+{oprtr} {
+          printf("operator:(%s) ", yytext);
+          yylval = yytext[0];
+          return op;
+        }
+{numbr}* {
+            printf("operand:(%s) ", yytext);
+            yylval = atoi(yytext);
+            return id;
+          }
+{op_br} {
+          printf("\nopen_bracket ");
+          return op_br;
+        }
+{cl_br} {
+          printf("closed_bracket\n");
+          return cl_br;
+        } 
+\n {
+    return nw_ln;
+   }
 %%
 
+int yywrap(void){
+  return 1;
+}
+
+/*
 int main(void)
 {
   printf("input: ");
@@ -30,3 +52,4 @@ int main(void)
   printf("\n");
   return 0;
 }
+*/

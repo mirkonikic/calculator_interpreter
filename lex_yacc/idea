@@ -9,7 +9,13 @@
 
 //[:YACC:]
 // S -> E
-// E -> id | E op id | (E)
+// E -> id | E op E | ( E )
+
+//da li dodati variable
+// code generation on sam kreira, pomocu yacc tool-a
+// tako da u ovom delu ne moram sa time da se igram
 
 + lex
-- yacc
++ yacc
+- additional ideas: variables
+- 
